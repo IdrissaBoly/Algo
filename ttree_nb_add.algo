@@ -2,6 +2,7 @@ ALGORITHM ttree_nb_add
 VAR
     input_sentence: STRING
     length, word_count, vowel_count: INTEGER
+
 BEGIN
     WRITE "Entrez une phrase se terminant par un point : "
     READ input_sentence
@@ -9,29 +10,20 @@ BEGIN
     // Supprimer le retour à la ligne de input_sentence
     input_sentence <- SUBSTRING(input_sentence, 1, LENGTH(input_sentence) - 1)
 
-    // Supprimer le point final de la phrase
-    length <- LENGTH(input_sentence)
-    IF length > 0 AND input_sentence[length] = '.' THEN
-        input_sentence <- SUBSTRING(input_sentence, 1, length - 1)
-    END IF
-
-    // Calculer le nombre de mots
-    word_count <- 1
+    // Calculer le nombre de mots et de voyelles
+    word_count <- 0
+    vowel_count <- 0
     FOR i <- 1 TO LENGTH(input_sentence) DO
         IF input_sentence[i] = ' ' THEN
             word_count <- word_count + 1
-        END IF
-    END FOR
-
-    // Calculer le nombre de voyelles
-    vowel_count <- 0
-    FOR i <- 1 TO LENGTH(input_sentence) DO
-        IF input_sentence[i] IS IN "AEIOUaeiou" THEN
+        ELSE IF input_sentence[i] IS IN "AEIOUaeiou" THEN
             vowel_count <- vowel_count + 1
         END IF
     END FOR
+    word_count <- word_count + 1  // Ajouter 1 pour le dernier mot
 
     // Afficher les résultats
+    length <- LENGTH(input_sentence)
     WRITE "Longueur de la phrase : ", length
     WRITE "Nombre de mots : ", word_count
     WRITE "Nombre de voyelles : ", vowel_count
